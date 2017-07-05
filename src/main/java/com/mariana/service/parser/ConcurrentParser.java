@@ -35,15 +35,15 @@ public class ConcurrentParser {
     }
 
     public Map<String, Integer> countValues(List<? extends InputStreamSource> inputStreamSources) {
-        ExecutorService parserExecutorService = Executors.newFixedThreadPool(threads);
-
         List<Future<Map<String, Integer>>> futures = new ArrayList<>(inputStreamSources.size());
 
+        ExecutorService parserExecutorService = Executors.newFixedThreadPool(threads);
         for (InputStreamSource inputStreamSource : inputStreamSources) {
             Callable<Map<String, Integer>> parserJob = () -> lineParser.countValues(inputStreamSource);
             Future<Map<String, Integer>> future = parserExecutorService.submit(parserJob);
             futures.add(future);
         }
+        parserExecutorService.shutdown();
 
         Map<String, Integer> valuesCount = new HashMap<>();
         for (Future<Map<String, Integer>> future : futures) {
