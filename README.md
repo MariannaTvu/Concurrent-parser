@@ -1,4 +1,4 @@
-bInTime Test Assignment
+Concurrent parser
 ===
 
 ## Technologies:
@@ -70,4 +70,3 @@ Stop service:
             ...
         ]    
         ```
-    
